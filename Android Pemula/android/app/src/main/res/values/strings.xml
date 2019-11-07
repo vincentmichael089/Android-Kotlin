@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">LandmarkIndonesia</string>
+    <string name="landmark_name">nama_landmark</string>
+    <string name="landmark_detail">keterangan_landmark</string>
+    <string name="menu_about">about</string>
+    <string name="me_email">vincentmichael089@gmail.com</string>
+    <string name="me_name">Vincent Michael Sutanto</string>
+</resources>
