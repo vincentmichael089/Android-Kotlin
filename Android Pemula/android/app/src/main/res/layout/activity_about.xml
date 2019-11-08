@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".AboutActivity"
-    android:gravity="center_horizontal">
+>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_me_avatar"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_margin="48dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_me_avatar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="48dp"
 
-        android:src="@color/cardview_shadow_start_color"/>
+            android:src="@color/cardview_shadow_start_color"/>
 
-    <TextView
-        android:id="@+id/tv_me_nama"
-        android:text="@string/me_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
-        />
-    <TextView
-        android:id="@+id/tv_me_email"
-        android:text="@string/me_email"
-        android:textSize="18sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_me_nama"
+            android:text="@string/me_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"
+            />
+        <TextView
+            android:id="@+id/tv_me_email"
+            android:text="@string/me_email"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
 
 
 
-
-</LinearLayout>
+</ScrollView>
