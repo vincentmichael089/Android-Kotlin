@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showRecyclerList() {
         rvLandmark.layoutManager = LinearLayoutManager(this)
-        val listLandmarkAdapter = ListLandmarkAdapter(list)
-        rvLandmark.adapter = listLandmarkAdapter
+        val cardViewLandmarkAdapter = CardViewLandmarkAdapter(list)
+        rvLandmark.adapter = cardViewLandmarkAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
