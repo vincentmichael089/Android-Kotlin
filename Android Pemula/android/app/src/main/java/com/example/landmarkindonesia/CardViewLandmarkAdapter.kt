@@ -11,6 +11,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
 class CardViewLandmarkAdapter(private val listLandmark: ArrayList<LandmarkModel>): RecyclerView.Adapter<CardViewLandmarkAdapter.CardViewViewHolder>() {
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: LandmarkModel)
+    }
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
+        this.onItemClickCallback = onItemClickCallback
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_cardview_landmarks,parent,false)
         return CardViewViewHolder(view)
@@ -28,7 +38,7 @@ class CardViewLandmarkAdapter(private val listLandmark: ArrayList<LandmarkModel>
         Glide.with(holder.itemView.context).load(landmark.photo).apply(RequestOptions().override(350,550)).into(holder.imgPhoto)
 
         holder.itemView.setOnClickListener{
-            Toast.makeText(holder.itemView.context, landmark.name, Toast.LENGTH_LONG).show()
+            onItemClickCallback.onItemClicked(listLandmark[holder.adapterPosition])
         }
 
     }

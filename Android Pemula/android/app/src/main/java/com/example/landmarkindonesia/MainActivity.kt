@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -40,6 +41,14 @@ class MainActivity : AppCompatActivity() {
         rvLandmark.layoutManager = LinearLayoutManager(this)
         val cardViewLandmarkAdapter = CardViewLandmarkAdapter(list)
         rvLandmark.adapter = cardViewLandmarkAdapter
+
+        cardViewLandmarkAdapter.setOnItemClickCallback(
+            object : CardViewLandmarkAdapter.OnItemClickCallback{
+                override fun onItemClicked(data: LandmarkModel) {
+                    landmarkClicked(data)
+                }
+            }
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -59,5 +68,9 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+    }
+
+    private fun landmarkClicked(landmark:LandmarkModel){
+        Toast.makeText(this, landmark.name, Toast.LENGTH_LONG).show()
     }
 }
