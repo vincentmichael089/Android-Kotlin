@@ -71,6 +71,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun landmarkClicked(landmark:LandmarkModel){
-        Toast.makeText(this, landmark.name, Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, landmark.name, Toast.LENGTH_LONG).show()
+        val intent = Intent(this@MainActivity,LandmarkDetailActivity::class.java)
+        intent.putExtra(LandmarkDetailActivity.EXTRA_NAME,landmark.name)
+        intent.putExtra(LandmarkDetailActivity.EXTRA_DETAIL,landmark.detail)
+        intent.putExtra(LandmarkDetailActivity.EXTRA_IMG,landmark.photo)
+        startActivity(intent)
     }
 }
