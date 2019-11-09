@@ -19,7 +19,7 @@
             android:layout_height="200dp"
             android:layout_margin="48dp"
 
-            android:src="@color/cardview_shadow_start_color"/>
+            android:src="@drawable/picture_about"/>
 
         <TextView
             android:id="@+id/tv_me_nama"
