@@ -38,7 +38,7 @@ class CardViewLandmarkAdapter(private val listLandmark: ArrayList<LandmarkModel>
         Glide.with(holder.itemView.context).load(landmark.photo).apply(RequestOptions().override(350,550)).into(holder.imgPhoto)
 
         holder.itemView.setOnClickListener{
-            onItemClickCallback.onItemClicked(listLandmark[holder.adapterPosition   ])
+            onItemClickCallback.onItemClicked(listLandmark[holder.adapterPosition])
         }
 
     }
