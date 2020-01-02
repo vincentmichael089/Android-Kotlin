@@ -59,22 +59,22 @@ class GameFragment : Fragment() {
         Log.i("GameFragment", "Called ViewModelProviders.of!")
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
 
-        binding.gameViewModel = viewModel //let xml access kotlin code (check game_fragment.xml onclick), let view communicate directly with viewmodel
+        binding.gameViewModel = viewModel //let xml access kotlin code (check score_fragment.xml onclick), let view communicate directly with viewmodel
+        binding.lifecycleOwner = this //databinding from livedata needs to know lifecycle
 
-
-        //LiveData Observer
-        viewModel.score.observe(this, Observer {
-            newScore ->  binding.scoreText.text = newScore.toString()
-        })
-
-        viewModel.word.observe(this, Observer {
-            newWord -> binding.wordText.text = newWord.toString()
-        })
+        //LiveData Observer, commented because now we are using livedata binding
+//        viewModel.score.observe(this, Observer {
+//            newScore ->  binding.scoreText.text = newScore.toString()
+//        })
+//
+//        viewModel.word.observe(this, Observer {
+//            newWord -> binding.wordText.text = newWord.toString()
+//        })
 
         viewModel.eventGameFinish.observe(this, Observer {
             hasFinished -> if(hasFinished){
-                gameFinished()
-                viewModel.onGameFinishComplete()
+            gameFinished()
+            viewModel.onGameFinishComplete()
         }
         })
 

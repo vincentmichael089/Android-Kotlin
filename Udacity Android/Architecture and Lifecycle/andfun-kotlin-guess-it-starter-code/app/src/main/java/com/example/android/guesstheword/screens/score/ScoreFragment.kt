@@ -58,12 +58,12 @@ class   ScoreFragment : Fragment() {
         viewModelFactory = ScoreViewModelFactory(scoreFragmentArgs.score)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ScoreViewModel::class.java)
 
-        binding.scoreViewModel = viewModel
-
-        // Add observer for score
-        viewModel.score.observe(this, Observer { newScore ->
-            binding.scoreText.text = newScore.toString()
-        })
+        binding.scoreViewModel = viewModel //let xml access kotlin code (check score_fragment.xml onclick), let view communicate directly with viewmodel
+        binding.lifecycleOwner = this
+        // Add observer for score, commented because now we are using livedata binding
+//        viewModel.score.observe(this, Observer { newScore ->
+//            binding.scoreText.text = newScore.toString()
+//        })
 
         viewModel.eventPlayAgain.observe(this, Observer { playAgain ->
             if (playAgain) {
