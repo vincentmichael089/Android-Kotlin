@@ -59,14 +59,8 @@ class GameFragment : Fragment() {
         Log.i("GameFragment", "Called ViewModelProviders.of!")
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
 
-        binding.correctButton.setOnClickListener {
-            viewModel.onCorrect()
+        binding.gameViewModel = viewModel //let xml access kotlin code (check game_fragment.xml onclick), let view communicate directly with viewmodel
 
-        }
-        binding.skipButton.setOnClickListener {
-            viewModel.onSkip()
-
-        }
 
         //LiveData Observer
         viewModel.score.observe(this, Observer {
