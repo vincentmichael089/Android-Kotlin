@@ -25,6 +25,7 @@ import androidx.room.RoomDatabase
  * entities is in list if you have more than one table supply it to entities
  * up the version number per updating schemas or app wont work
  * exportSchema true means saving version control of database to a folder. no need in this project
+ * run test by right clicking the file name and click run
  */
 @Database(entities = [SleepNight::class], version = 1, exportSchema = false)
 abstract class SleepDatabase : RoomDatabase(){
