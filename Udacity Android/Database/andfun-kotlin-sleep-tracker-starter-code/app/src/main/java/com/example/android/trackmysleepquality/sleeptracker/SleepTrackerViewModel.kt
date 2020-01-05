@@ -52,6 +52,18 @@ class SleepTrackerViewModel(
         nights -> formatNights(nights, application.resources)
     }
 
+    // button visibilities
+    val startButtonVisible = Transformations.map(_tonight){
+        null == it // tonight is null at beginning, so set to visible
+    }
+
+    val stopButtonVisible = Transformations.map(_tonight){
+        null != it // tonight isnt null, so set to invisible
+    }
+
+    val clearButtonVisible = Transformations.map(_nights){
+        it?.isNotEmpty()
+    }
     // flag navigation to sleepQuality
     private val _navigateToSleepQuality = MutableLiveData<SleepNight>()
     val navigateToSleepQuality : LiveData<SleepNight>
