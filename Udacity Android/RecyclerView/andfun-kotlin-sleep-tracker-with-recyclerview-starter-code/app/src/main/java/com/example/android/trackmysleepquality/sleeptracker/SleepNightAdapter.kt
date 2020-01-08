@@ -22,26 +22,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.convertDurationToFormatted
 import com.example.android.trackmysleepquality.convertNumericQualityToString
 import com.example.android.trackmysleepquality.database.SleepNight
 
-class SleepNightAdapter : RecyclerView.Adapter<SleepNightAdapter.ViewHolder>(){
-    var data = listOf<SleepNight>()
-        set(value){
-            field = value
-            notifyDataSetChanged() // this is expensive operation
-        }
-
-    override fun getItemCount(): Int {
-        return data.size
-    }
+class SleepNightAdapter : ListAdapter<SleepNight, SleepNightAdapter.ViewHolder>(SleepNightDiffCallback()){
+// code below is no need when using ListAdapter and DiffUtil Callback
+//    var data = listOf<SleepNight>()
+//        set(value){
+//            field = value
+//            notifyDataSetChanged() // this is expensive operation
+//        }
+//
+//    override fun getItemCount(): Int {
+//        return data.size
+//    }
 
     //encapsulation of ViewHolder make sure that adapter is scalable if there is more than 1 ViewHolder to be shown by the adapter.
     override fun onBindViewHolder(holder: SleepNightAdapter.ViewHolder, position: Int) {
-        val item = data[position]
+        val item = getItem(position)
        // val res = holder.itemView.context.resources //moved to ViewHolder.bind function
 
         holder.bind(item) // right click, refactor, to function and name it bind, resource parameter then removed
@@ -96,6 +99,17 @@ class SleepNightAdapter : RecyclerView.Adapter<SleepNightAdapter.ViewHolder>(){
             }
         }
     }
+}
 
+class SleepNightDiffCallback : DiffUtil.ItemCallback<SleepNight>(){
+    // check every item if it has the same id before and after (if 2 items have sasme id)
+    override fun areItemsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+        return oldItem.nightId == newItem.nightId
+    }
+
+    // check if items are changed (if 2 items are equal)
+    override fun areContentsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+        return oldItem == newItem
+    }
 
 }
