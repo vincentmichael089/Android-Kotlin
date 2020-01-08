@@ -21,13 +21,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.trackmysleepquality.R
-import com.example.android.trackmysleepquality.convertDurationToFormatted
-import com.example.android.trackmysleepquality.convertNumericQualityToString
 import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.databinding.ListItemSleepNightBinding
 
-class SleepNightAdapter : ListAdapter<SleepNight, SleepNightAdapter.ViewHolder>(SleepNightDiffCallback()){
+class SleepNightAdapter(val clickListener: SleepNightListener) : ListAdapter<SleepNight, SleepNightAdapter.ViewHolder>(SleepNightDiffCallback()){
 // code below is no need when using ListAdapter and DiffUtil Callback
 //    var data = listOf<SleepNight>()
 //        set(value){
@@ -44,7 +41,7 @@ class SleepNightAdapter : ListAdapter<SleepNight, SleepNightAdapter.ViewHolder>(
         val item = getItem(position)
        // val res = holder.itemView.context.resources //moved to ViewHolder.bind function
 
-        holder.bind(item) // right click, refactor, to function and name it bind, resource parameter then removed
+        holder.bind(item!!, clickListener) // right click, refactor, to function and name it bind, resource parameter then removed //alt+enter on clickListener, add parameter to bind
     }
 
     // alt + enter in holder parameter, and click convert to receiver and move it to ViewHolder as a function (because ViewHolder.bind is the same as ViewHolder class having bind as an inner function)
@@ -71,8 +68,9 @@ class SleepNightAdapter : ListAdapter<SleepNight, SleepNightAdapter.ViewHolder>(
         //val sleepQuality : TextView = binding.sleepLength
         //val quality : TextView = binding.qualityString
         //val qualityImage : ImageView = binding.qualityImage
-        fun bind(item: SleepNight) { // alt + enter in holder parameter, and click convert to receiver
+        fun bind(item: SleepNight, clickListener: SleepNightListener) { // alt + enter in holder parameter, and click convert to receiver
             binding.sleep = item
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
@@ -97,4 +95,8 @@ class SleepNightDiffCallback : DiffUtil.ItemCallback<SleepNight>(){
         return oldItem == newItem
     }
 
+}
+
+class SleepNightListener(val clickListener: (sleepId : Long) -> Unit){
+    fun onClick(night: SleepNight) = clickListener(night.nightId)
 }
