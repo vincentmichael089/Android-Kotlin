@@ -16,12 +16,8 @@
 
 package com.example.android.trackmysleepquality.sleeptracker
 
-import android.content.res.Resources
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +25,7 @@ import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.convertDurationToFormatted
 import com.example.android.trackmysleepquality.convertNumericQualityToString
 import com.example.android.trackmysleepquality.database.SleepNight
+import com.example.android.trackmysleepquality.databinding.ListItemSleepNightBinding
 
 class SleepNightAdapter : ListAdapter<SleepNight, SleepNightAdapter.ViewHolder>(SleepNightDiffCallback()){
 // code below is no need when using ListAdapter and DiffUtil Callback
@@ -69,18 +66,18 @@ class SleepNightAdapter : ListAdapter<SleepNight, SleepNightAdapter.ViewHolder>(
         return ViewHolder.from(parent) // refactor and extract as function named from
     }
 
-    class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView){ //make the constructor private
-        val sleepQuality : TextView = itemView.findViewById(R.id.sleep_length)
-        val quality : TextView = itemView.findViewById(R.id.quality_string)
-        val qualityImage : ImageView = itemView.findViewById(R.id.quality_image)
-
+    class ViewHolder private constructor(val binding: ListItemSleepNightBinding) : RecyclerView.ViewHolder(binding.root){ //make the constructor private //binding.root is constraint layout
+        //refactor code below to inline ctrl+alt+n
+        //val sleepQuality : TextView = binding.sleepLength
+        //val quality : TextView = binding.qualityString
+        //val qualityImage : ImageView = binding.qualityImage
         fun bind(item: SleepNight) { // alt + enter in holder parameter, and click convert to receiver
             //add resource, and remove resource from function parameter
             val res = itemView.context.resources
 
-            sleepQuality.text = convertDurationToFormatted(item.startTimeMilli, item.endTimeMilli, res)
-            quality.text = convertNumericQualityToString(item.sleepQuality, res)
-            qualityImage.setImageResource(when (item.sleepQuality) {
+            binding.sleepLength.text = convertDurationToFormatted(item.startTimeMilli, item.endTimeMilli, res)
+            binding.qualityString.text = convertNumericQualityToString(item.sleepQuality, res)
+            binding.qualityImage.setImageResource(when (item.sleepQuality) {
                 0 -> R.drawable.ic_sleep_0
                 1 -> R.drawable.ic_sleep_1
                 2 -> R.drawable.ic_sleep_2
@@ -94,8 +91,8 @@ class SleepNightAdapter : ListAdapter<SleepNight, SleepNightAdapter.ViewHolder>(
         companion object { //alt enter from function and set as companion object, then move to ViewHolder class
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.list_item_sleep_night, parent, false)
-                return ViewHolder(view)
+                val binding = ListItemSleepNightBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding) //alt + enter di parameter binding ke view type
             }
         }
     }
