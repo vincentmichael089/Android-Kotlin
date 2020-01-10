@@ -45,9 +45,9 @@ class OverviewViewModel : ViewModel() {
         get() = _status
 
     // LiveData for MarsProperty Object
-    private val _property = MutableLiveData<MarsProperty>()
-    val property : LiveData<MarsProperty>
-        get() = _property
+    private val _properties = MutableLiveData<List<MarsProperty>>()
+    val properties : LiveData<List<MarsProperty>>
+        get() = _properties
 
     // Coroutine
     private var viewModelJob = Job()
@@ -71,7 +71,7 @@ class OverviewViewModel : ViewModel() {
                 val listResult = getPropertiesDeffered.await()
                 _status.value = "Success: ${listResult.size} data properties retrivied"
                 if (listResult.size>0){
-                    _property.value = listResult[0]
+                    _properties.value = listResult
                 }
             }catch (e: Exception){
                 _status.value = "Failure: "+e.message
