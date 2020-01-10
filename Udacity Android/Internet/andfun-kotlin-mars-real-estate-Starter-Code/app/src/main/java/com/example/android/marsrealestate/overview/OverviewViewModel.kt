@@ -17,6 +17,7 @@
 
 package com.example.android.marsrealestate.overview
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,6 +30,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
@@ -36,11 +38,16 @@ import retrofit2.Response
 class OverviewViewModel : ViewModel() {
 
     // The internal MutableLiveData String that stores the status of the most recent request
-    private val _response = MutableLiveData<String>()
+    private val _status = MutableLiveData<String>()
 
     // The external immutable LiveData for the request status String
-    val response: LiveData<String>
-        get() = _response
+    val status: LiveData<String>
+        get() = _status
+
+    // LiveData for MarsProperty Object
+    private val _property = MutableLiveData<MarsProperty>()
+    val property : LiveData<MarsProperty>
+        get() = _property
 
     // Coroutine
     private var viewModelJob = Job()
@@ -59,12 +66,15 @@ class OverviewViewModel : ViewModel() {
      */
     private fun getMarsRealEstateProperties() {
         coroutineScope.launch {
-            var getPropertiesDeffered = MarsApi.retrofitService.getProperties()
+            val getPropertiesDeffered = MarsApi.retrofitService.getProperties()
             try {
-                var listResult = getPropertiesDeffered.await()
-                _response.value = "Success: ${listResult.size} data properties retrivied"
-            }catch (t : Throwable){
-                _response.value = "Failure: "+t.message
+                val listResult = getPropertiesDeffered.await()
+                _status.value = "Success: ${listResult.size} data properties retrivied"
+                if (listResult.size>0){
+                    _property.value = listResult[0]
+                }
+            }catch (e: Exception){
+                _status.value = "Failure: "+e.message
             }
         }
     }
