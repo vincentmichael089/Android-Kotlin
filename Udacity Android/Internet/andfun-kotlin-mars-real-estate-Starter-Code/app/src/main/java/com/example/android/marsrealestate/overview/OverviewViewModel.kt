@@ -32,16 +32,18 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Exception
 
+
+enum class MarsApiStatus { LOADING, ERROR, DONE }
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
  */
 class OverviewViewModel : ViewModel() {
 
     // The internal MutableLiveData String that stores the status of the most recent request
-    private val _status = MutableLiveData<String>()
+    private val _status = MutableLiveData<MarsApiStatus>()
 
     // The external immutable LiveData for the request status String
-    val status: LiveData<String>
+    val status: LiveData<MarsApiStatus>
         get() = _status
 
     // LiveData for MarsProperty Object
@@ -68,13 +70,15 @@ class OverviewViewModel : ViewModel() {
         coroutineScope.launch {
             val getPropertiesDeffered = MarsApi.retrofitService.getProperties()
             try {
+                _status.value = MarsApiStatus.LOADING
                 val listResult = getPropertiesDeffered.await()
-                _status.value = "Success: ${listResult.size} data properties retrivied"
+                _status.value = MarsApiStatus.DONE
                 if (listResult.size>0){
                     _properties.value = listResult
                 }
             }catch (e: Exception){
-                _status.value = "Failure: "+e.message
+                _status.value = MarsApiStatus.ERROR
+                _properties.value = ArrayList()
             }
         }
     }
