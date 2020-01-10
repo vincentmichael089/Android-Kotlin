@@ -17,8 +17,10 @@
 
 package com.example.android.marsrealestate.network
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -28,6 +30,7 @@ private const val BASE_URL = "https://mars.udacity.com/"
 
 private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create()) // tells to convert Json to Moshi Object
+        .addCallAdapterFactory(CoroutineCallAdapterFactory()) // coroutine-based API
         .baseUrl(BASE_URL)
         .build()
 
@@ -39,7 +42,7 @@ private val moshi = Moshi.Builder()
 interface MarsApiService{
     @GET("realestate")
     fun getProperties():
-            Call<List<MarsProperty>> // Call is what MarsApiService returned
+            Deferred<List<MarsProperty>> //  Deffered is Coroutine return value
 }
 
 object MarsApi{ // object so can be called in OverviewViewModel
