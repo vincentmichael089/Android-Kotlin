@@ -36,4 +36,8 @@ class RefreshDataWorker(appContext : Context, params : WorkerParameters) : Corou
             Payload(Result.RETRY)
         }
     }
+
+    companion object{
+        const val WORK_NAME = "RefreshDataWorker"
+    }
 }
