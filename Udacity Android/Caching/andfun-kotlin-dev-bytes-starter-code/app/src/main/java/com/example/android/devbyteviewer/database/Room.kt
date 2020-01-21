@@ -16,3 +16,18 @@
  */
 
 package com.example.android.devbyteviewer.database
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+
+@Dao
+interface VideoDao{
+    @Query("SELECT * FROM databasevideo")
+    fun getVideos() : List<DatabaseVideo>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg videos : DatabaseVideo) //vararg to take unknown number of arguments in kotlin
+
+}
