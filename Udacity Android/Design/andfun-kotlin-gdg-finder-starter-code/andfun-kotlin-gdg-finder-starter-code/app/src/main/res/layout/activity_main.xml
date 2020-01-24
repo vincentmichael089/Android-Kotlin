@@ -11,15 +11,18 @@
                 android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize">
+                android:id="@+id/toolbar"
+                android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+                android:background="?colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
                 <ImageView
                         android:id="@+id/hero_image"
                         android:layout_width="150dp"
                         android:layout_height="match_parent"
                         app:srcCompat="@drawable/logo"
-                        android:contentDescription="@string/app_name"/>
+                        android:contentDescription="@string/app_name"
+                        android:tint="?colorOnPrimary"/>
             </androidx.appcompat.widget.Toolbar>
 
             <fragment
