@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/about_google_developer_groups"
-                    style="@style/TextAppearance.Title"
+                    android:textAppearance="?attr/textAppearanceHeadline5"
                     app:fontFamily="@font/aldrich"
                     app:layout_constraintEnd_toStartOf="@+id/end_grid"
                     app:layout_constraintStart_toStartOf="@+id/start_grid"
@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/gdgs_are"
                         android:layout_marginTop="13dp"
-                        style="@style/TextAppearance.Title.Subtitle"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
                         app:layout_constraintStart_toEndOf="@id/start_grid"
                         app:layout_constraintEnd_toStartOf="@id/end_grid"
                         app:layout_constraintTop_toBottomOf="@+id/intro_text"/>
