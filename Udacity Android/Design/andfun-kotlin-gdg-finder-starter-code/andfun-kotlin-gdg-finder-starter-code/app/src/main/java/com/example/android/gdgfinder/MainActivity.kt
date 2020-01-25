@@ -12,7 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.android.gdgfinder.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
+    //Accessibility Scanner (Check Commit)
     lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
