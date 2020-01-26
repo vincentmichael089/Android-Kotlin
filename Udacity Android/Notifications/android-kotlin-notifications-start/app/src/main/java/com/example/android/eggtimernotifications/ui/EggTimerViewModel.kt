@@ -118,7 +118,7 @@ class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
                 }
                 val triggerTime = SystemClock.elapsedRealtime() + selectedInterval
 
-                // TODO: Step 1.5 get an instance of NotificationManager and call sendNotification
+                // TODO: Step 1.5 get an instance of NotificationManager and call sendNotification (Check NotificationUtils)
                 val notificationManager = ContextCompat.getSystemService(app, NotificationManager::class.java) as NotificationManager
                 notificationManager.sendNotification(app.getString(R.string.timer_running), app)
 
