@@ -47,6 +47,8 @@ class SnoozeReceiver: BroadcastReceiver() {
             triggerTime,
             notifyPendingIntent
         )
+        val notificationManager = ContextCompat.getSystemService(context, NotificationManager::class.java) as NotificationManager
+        notificationManager.cancelAll() // remove old notification and start new notification that timed 1 minute
     }
 
 }
