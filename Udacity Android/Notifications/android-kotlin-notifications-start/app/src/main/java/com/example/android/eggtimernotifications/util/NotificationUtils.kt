@@ -41,8 +41,15 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     // Create the content intent for the notification, which launches
     // this activity
     // TODO: Step 1.11 create intent
+    val contentIntent = Intent(applicationContext, MainActivity::class.java)
 
     // TODO: Step 1.12 create PendingIntent
+    val contentPendingIntent = PendingIntent.getActivity(
+        applicationContext,
+        NOTIFICATION_ID,
+        contentIntent,
+        PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
     // TODO: Step 2.0 add style
 
@@ -62,7 +69,8 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentTitle(applicationContext.getString(R.string.notification_title))
         .setContentText(messageBody)
     // TODO: Step 1.13 set content intent
-
+        .setContentIntent(contentPendingIntent)
+        .setAutoCancel(true) // dismiss notification after clicked
         // TODO: Step 2.1 add style to builder
 
         // TODO: Step 2.3 add snooze action
