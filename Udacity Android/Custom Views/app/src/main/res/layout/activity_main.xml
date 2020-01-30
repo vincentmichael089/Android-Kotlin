@@ -23,6 +23,9 @@
 
     <com.example.customfancontroller.DialView
         android:id="@+id/dialView"
+        app:fanColor1="#FFEB3B"
+        app:fanColor2="#CDDC39"
+        app:fanColor3="#009688"
         android:layout_width="@dimen/fan_dimen"
         android:layout_height="@dimen/fan_dimen"
         app:layout_constraintTop_toBottomOf="@+id/customViewLabel"

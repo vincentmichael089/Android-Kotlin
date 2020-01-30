@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.withStyledAttributes
 import java.lang.Float.min
 import kotlin.math.cos
 import kotlin.math.min
@@ -28,6 +29,11 @@ private enum class FanSpeed(val label: Int){
 
 private const val RADIUS_OFFSET_LABEL = 30
 private const val RADIUS_OFFSET_INDICATOR = -35
+
+// Variables to cache the attribute values.
+private var fanSpeedLowColor = 0
+private var fanSpeedMediumColor = 0
+private var fanSeedMaxColor = 0
 
 // TODO: The @JvmOverloads annotation instructs the Kotlin compiler to generate overloads for this
 //  function that substitute default parameter values.
@@ -54,6 +60,14 @@ class DialView @JvmOverloads constructor(
 
     init {
         isClickable = true
+
+        //  the following code using the withStyledAttributes extension function.
+        // You supply the attributes and view, and and set your local variables.
+        context.withStyledAttributes(attrs, R.styleable.DialView) {
+            fanSpeedLowColor = getColor(R.styleable.DialView_fanColor1, 0)
+            fanSpeedMediumColor = getColor(R.styleable.DialView_fanColor2, 0)
+            fanSeedMaxColor = getColor(R.styleable.DialView_fanColor3, 0)
+        }
     }
 
     override fun performClick(): Boolean {
@@ -80,11 +94,12 @@ class DialView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         // Draw the dial.
-        paint.color = if(fanSpeed == FanSpeed.OFF){
-            Color.GRAY
-        }else{
-            Color.LTGRAY
-        }
+        paint.color = when (fanSpeed) {
+            FanSpeed.OFF -> Color.GRAY
+            FanSpeed.LOW -> fanSpeedLowColor
+            FanSpeed.MEDIUM -> fanSpeedMediumColor
+            FanSpeed.HIGH -> fanSeedMaxColor
+        } 
         canvas?.drawCircle((width/2).toFloat(),(height/2).toFloat(),radius,paint)
 
         // Draw the indicator circle.
