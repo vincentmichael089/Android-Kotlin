@@ -4,12 +4,16 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Path
+import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 
 private const val STROKE_WIDTH = 12f // has to be float
 
 class MyCanvasView(context: Context) : View(context){
+    private var motionTouchEventX = 0f
+    private var motionTouchEventY = 0f
 
     // bitmap and canvas for caching what has been drawn before.
     private lateinit var extraCanvas : Canvas
@@ -27,6 +31,27 @@ class MyCanvasView(context: Context) : View(context){
         strokeCap = Paint.Cap.ROUND // default: BUTT
         strokeWidth = STROKE_WIDTH // default: Hairline-width (really thin)
     }
+
+    private var path = Path() // path that user drawn
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        motionTouchEventX = event!!.x
+        motionTouchEventY = event!!.y
+
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> touchStart()
+            MotionEvent.ACTION_MOVE -> touchMove()
+            MotionEvent.ACTION_UP -> touchUp()
+        }
+
+        return true
+    }
+
+    private fun touchStart() {}
+
+    private fun touchMove() {}
+
+    private fun touchUp() {}
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
