@@ -1,13 +1,11 @@
 package com.example.minipaint
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import androidx.constraintlayout.solver.widgets.Rectangle
 import androidx.core.content.res.ResourcesCompat
 
 private const val STROKE_WIDTH = 12f // has to be float
@@ -85,6 +83,8 @@ class MyCanvasView(context: Context) : View(context){
         path.reset()
     }
 
+    private lateinit var frame : Rect
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
@@ -95,9 +95,15 @@ class MyCanvasView(context: Context) : View(context){
         extraBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888) //ARGB_8888 stores each color in 4 bytes and is recommended.
         extraCanvas = Canvas(extraBitmap)
         extraCanvas.drawColor(backgroundColor)
+
+        // Calculate a rectangular frame around the picture.
+        val inset = 40
+        frame = Rect(inset, inset, width - inset, height - inset)
     }
 
     override fun onDraw(canvas: Canvas?) {
         canvas?.drawBitmap(extraBitmap,0f,0f, null)
+        canvas?.drawRect(frame, paint)
     }
+
 }
