@@ -78,9 +78,17 @@ class ClippedView @JvmOverloads constructor(
             textOffset,
             paint
         )
+        //Note: The Paint.Align property specifies which side of the text to align to the origin
+        // (not which side of the origin the text goes, or where in the region it is aligned!).
+        // Aligning the right side of the text to the origin places it on the left of the origin.
     }
 
     private fun drawBackAndUnclippedRectangle(canvas: Canvas) {
+        canvas.drawColor(Color.GRAY)
+        canvas.save() //Saves the current state of the canvas.
+        canvas.translate(columnOne,rowOne)
+        drawClippedRectangle(canvas)
+        canvas.restore() //Restores the previous state of the canvas that was saved.
     }
 
     private fun drawDifferenceClippingExample(canvas: Canvas) {
