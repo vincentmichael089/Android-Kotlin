@@ -2916,6 +2916,10 @@
       <window_info anchor="right" id="Preview" />
     </layout>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add base code for clipping" />
+    <option name="LAST_COMMIT_MESSAGE" value="add base code for clipping" />
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider editor-type-id="android-designer2" />
