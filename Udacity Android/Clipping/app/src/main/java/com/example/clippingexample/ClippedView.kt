@@ -222,6 +222,13 @@ class ClippedView @JvmOverloads constructor(
     }
 
     private fun drawOutsideClippingExample(canvas: Canvas) {
+        canvas.save()
+        canvas.translate(columnOne,rowFour)
+        canvas.clipRect(2 * rectInset,2 * rectInset,
+            clipRectRight - 2 * rectInset,
+            clipRectBottom - 2 * rectInset)
+        drawClippedRectangle(canvas)
+        canvas.restore()
     }
 
     private fun drawTranslatedTextExample(canvas: Canvas) {
