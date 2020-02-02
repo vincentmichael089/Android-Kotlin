@@ -21,6 +21,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Property
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
@@ -77,6 +78,22 @@ class MainActivity : AppCompatActivity() {
             shower()
         }
     }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        when (event?.action) {
+            MotionEvent.ACTION_DOWN -> touchStart()
+            MotionEvent.ACTION_MOVE -> touchMove()
+            MotionEvent.ACTION_UP -> touchUp()
+        }
+
+        return true
+    }
+
+    private fun touchStart() {}
+    private fun touchMove() {
+        shower()
+    }
+    private fun touchUp() {}
 
     private fun rotater() {
         val animator = ObjectAnimator.ofFloat(star, View.ROTATION, -360F, 0F)
@@ -167,7 +184,7 @@ class MainActivity : AppCompatActivity() {
         container.addView(newStar)
 
         // randomize size of star
-        newStar.scaleX = Math.random().toFloat() * 1.5f + .1f
+        newStar.scaleX = Math.random().toFloat() * 1.0f + .1f
         newStar.scaleY = newStar.scaleX
         starW *= newStar.scaleX
         starH *= newStar.scaleY
