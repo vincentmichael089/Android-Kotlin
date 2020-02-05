@@ -37,10 +37,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
+        val zoomLevel = 15f
+        //The zoom level controls how zoomed in you are on the map. The following list gives you an
+        // idea of what level of detail each level of zoom shows:
+        //1: World
+        //5: Landmass/continent
+        //10: City
+        //15: Streets
+        //20: Buildings
+
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
