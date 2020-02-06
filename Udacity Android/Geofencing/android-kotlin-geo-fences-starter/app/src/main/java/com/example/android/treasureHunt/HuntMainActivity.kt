@@ -90,8 +90,9 @@ class HuntMainActivity : AppCompatActivity() {
  */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        // TODO: Step 7 add code to check that the user turned on their device location and ask
-        //  again if they did not
+        if(requestCode == REQUEST_TURN_DEVICE_LOCATION_ON){
+            checkDeviceLocationSettingsAndStartGeofence(false) // false : dont ask again if user doesnt want to turn on location
+        }
     }
 
     /*
@@ -149,7 +150,41 @@ class HuntMainActivity : AppCompatActivity() {
      *  the opportunity to turn on location services within our app.
      */
     private fun checkDeviceLocationSettingsAndStartGeofence(resolve:Boolean = true) {
-        // TODO: Step 6 add code to check that the device's location is on
+        // create locationRequest and the builder
+        val locationRequest = LocationRequest.create().apply {
+            priority = LocationRequest.PRIORITY_LOW_POWER
+        }
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+
+        // check the location settings wether is on or not
+        val settingsClient = LocationServices.getSettingsClient(this)
+        val locationSettingsResponseTask = settingsClient.checkLocationSettings(builder.build())
+
+        locationSettingsResponseTask.addOnFailureListener{ // on failure because most likely locaton not active
+            exception ->
+            if(exception is ResolvableApiException && resolve){
+                try { // prompt user to turn on location services
+                    exception.startResolutionForResult(this@HuntMainActivity, REQUEST_TURN_DEVICE_LOCATION_ON)
+                }catch (sendEx : IntentSender.SendIntentException){
+                    Log.d(TAG, "Error getting location settings resolution: "+sendEx.message)
+                }
+            }else{ // prompt user need location to treasure hunt
+                Snackbar.make(
+                    binding.activityMapsMain,
+                    R.string.location_required_error,
+                    Snackbar.LENGTH_INDEFINITE
+                ).setAction(android.R.string.ok){
+                    checkDeviceLocationSettingsAndStartGeofence()
+                }.show()
+            }
+        }
+
+        locationSettingsResponseTask.addOnCompleteListener{
+            if (it.isSuccessful){
+                addGeofenceForClue()
+            }
+        }
+
     }
 
     /*
