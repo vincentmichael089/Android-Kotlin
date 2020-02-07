@@ -30,11 +30,32 @@ class StatisticsUtilsTest{
                 Task("Title4", "Description4", isCompleted = true),
                 Task("Title5", "Description5", isCompleted = true)
         )
-        
+
         val result = getActiveAndCompletedStats(tasks)
 
         assertEquals(40f, result.completedTasksPercent)
         assertEquals(60f, result.activeTasksPercent)
 
+    }
+
+    // App would crash if there is no task, check when there is 0 task and when there is null task
+    @Test
+    fun getPercentageZeroTask(){
+        val tasks = listOf<Task>()
+
+        val result = getActiveAndCompletedStats(tasks)
+
+        assertEquals(0f, result.completedTasksPercent)
+        assertEquals(0f, result.activeTasksPercent)
+    }
+
+    @Test
+    fun getPercentageNullTask(){
+        val tasks = null
+
+        val result = getActiveAndCompletedStats(tasks)
+
+        assertEquals(0f, result.completedTasksPercent)
+        assertEquals(0f, result.activeTasksPercent)
     }
 }

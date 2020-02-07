@@ -23,12 +23,16 @@ import com.example.android.architecture.blueprints.todoapp.data.Task
  */
 // to create test right click function -> generate -> test
 internal fun getActiveAndCompletedStats(tasks: List<Task>?): StatsResult {
-    val totalTasks = tasks!!.size
-    val numberOfActiveTasks = tasks.count { it.isActive }
-    return StatsResult(
-        activeTasksPercent = 100f * numberOfActiveTasks / tasks.size,
-        completedTasksPercent = 100f * (totalTasks - numberOfActiveTasks) / tasks.size
-    )
+    if(tasks == null || tasks.isEmpty()){
+        return StatsResult(0f,0f)
+    }else{
+        val totalTasks = tasks.size
+        val numberOfActiveTasks = tasks.count { it.isActive }
+        return StatsResult(
+                activeTasksPercent = 100f * numberOfActiveTasks / tasks.size,
+                completedTasksPercent = 100f * (totalTasks - numberOfActiveTasks) / tasks.size
+        )
+    }
 }
 
 data class StatsResult(val activeTasksPercent: Float, val completedTasksPercent: Float)
