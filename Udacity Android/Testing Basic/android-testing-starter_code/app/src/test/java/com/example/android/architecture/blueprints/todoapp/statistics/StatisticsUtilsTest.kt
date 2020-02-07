@@ -23,7 +23,7 @@ class StatisticsUtilsTest{
 
         // THEN there are 0% of completed tasks and 100% of active tasks
         assertThat(result.completedTasksPercent, `is`(0f)) // using hamcrest so it is humanely readable
-        assertEquals(100f, result.activeTasksPercent) // not using hamcrest 
+        assertEquals(100f, result.activeTasksPercent) // not using hamcrest
     }
 
     // if there is 2 completed tasks and 3 active tasks
