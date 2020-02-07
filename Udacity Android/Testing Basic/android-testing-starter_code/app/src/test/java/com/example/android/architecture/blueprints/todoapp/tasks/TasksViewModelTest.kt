@@ -6,8 +6,8 @@ import androidx.lifecycle.Observer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.architecture.blueprints.todoapp.Event
-import org.hamcrest.Matchers.not
-import org.hamcrest.Matchers.nullValue
+import com.example.android.architecture.blueprints.todoapp.getOrAwaitValue
+import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
@@ -26,20 +26,11 @@ class TasksViewModelTest{
         // GIVEN a new model, add dependencies so the viewModel can get the application context
         val taskViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
 
-        val observer = Observer<Event<Unit>>{}
-        try{
-            // observe the live data
-            taskViewModel.newTaskEvent.observeForever { observer }
+        // WHEN
+        taskViewModel.addNewTask()
 
-            // when adding new task
-            taskViewModel.addNewTask()
-
-            // then new task event is triggered
-            val value = taskViewModel.newTaskEvent.value
-            assertThat(value?.getContentIfNotHandled(), (not(nullValue())))
-        }finally {
-            // remove the observer whatever happened
-            taskViewModel.newTaskEvent.removeObserver(observer)
-        }
+        // THEN
+        val value = taskViewModel.newTaskEvent.getOrAwaitValue()
+        assertThat(value.getContentIfNotHandled(), not(notNullValue()))
     }
 }
