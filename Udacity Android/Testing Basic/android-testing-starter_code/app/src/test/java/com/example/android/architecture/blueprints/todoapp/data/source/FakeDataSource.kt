@@ -59,10 +59,10 @@ class FakeDataSource(var tasks: MutableList<Task>? = mutableListOf()) : TasksDat
     }
 
     override suspend fun deleteAllTasks() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        tasks?.clear()
     }
 
     override suspend fun deleteTask(taskId: String) {
-        tasks?.clear()
+
     }
 }
